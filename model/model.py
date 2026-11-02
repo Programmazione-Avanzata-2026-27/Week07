@@ -1,4 +1,4 @@
-from database.pippo import Pippo
+from database.dao import Dao
 
 
 class Model:
@@ -8,4 +8,10 @@ class Model:
     # Funzione che è incaricata di fornire le trip
     def get_trips(self):
         print("Getting trips ...")
-        pippo = Pippo()
+        dao = Dao()
+        return dao.read_trips_from_db()
+
+    def get_selected_trips(self, letter):
+        print("Getting selected trips ...")
+        dao = Dao()
+        return dao.read_selected_trips_from_db(letter)

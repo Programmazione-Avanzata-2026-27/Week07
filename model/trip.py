@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+
 
 @dataclass
 class Trip:
@@ -11,5 +12,14 @@ class Trip:
     duration_seconds : int
     user_type : str
 
+    start_station : None
+    end_station : None
+
     def __str__(self):
         return f"Trip {self.trip_id}"
+
+    def __eq__(self, other):
+        return self.trip_id == other.trip_id
+
+    def __hash__(self):
+        return hash(self.trip_id)

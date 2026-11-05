@@ -1,6 +1,6 @@
 from database.db_connect import DB_Connect
 from model.trip import Trip
-
+from model.station import Station
 
 # Classe che si occupa di parlare con il database
 class Dao:
@@ -12,7 +12,7 @@ class Dao:
         db = DB_Connect()
         cnx = db.get_connection()
         if cnx is not None:
-            print("Connection established")
+            print("Connection to database established")
 
             #query ="SELECT * FROM trip"
             query ="SELECT trip_id, bike_id, start_station_id, end_station_id, start_time, end_time, duration_seconds, user_type FROM trip"
@@ -22,11 +22,12 @@ class Dao:
             # result = cursor.fetchall()
             result = []
             for row in cursor:
-                trip = Trip(*row)
+                trip = Trip(*row, None, None)
                 result.append(trip)
 
             cursor.close()
             cnx.close()
+            print("Trips read from database")
             return result
 
 
@@ -51,7 +52,31 @@ class Dao:
 
             cursor.close()
             cnx.close()
+            print("Trips (selected) read from database")
             return result
+
+    # Funzione incaricata di leggere le station dal database con SQL
+    def read_stations_from_db(self):
+        db = DB_Connect()
+        cnx = db.get_connection()
+        if cnx is not None:
+            print("Connection established")
+
+            query ="SELECT * FROM station"
+            cursor = cnx.cursor()
+            cursor.execute(query)
+            result = []
+            for row in cursor:
+                station = Station(*row)
+                result.append(station)
+
+            cursor.close()
+            cnx.close()
+            print("Stations read from database")
+            return result
+
+
+
 
 
 
